@@ -26,7 +26,7 @@ export class RecipesService {
     .populate({ 
       path: 'ingredients.ingredient', 
       model: 'Ingredients', 
-      select: 'name'
+      select: ['name', 'imageUrl']
     });
   }
 

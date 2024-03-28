@@ -10,6 +10,9 @@ export type IngredientsDocument = Ingredients & Document<Types.ObjectId>;
 export class Ingredients {
   @Prop({required: true, type: String})
   name: string;
+
+  @Prop({required: false, type: String})
+  imageUrl: string;
 }
 
 export const IngredientsSchema = SchemaFactory.createForClass(Ingredients);

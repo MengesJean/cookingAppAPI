@@ -5,5 +5,6 @@ export class CreateIngredientDto {
     @IsNotEmpty()
     name: string;
 
-    recipes?: string[];
+    @IsString()
+    imageUrl: string;
 }

@@ -4,6 +4,7 @@ import { AppService } from './app.service.js';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RecipesModule } from './recipes/recipes.module.js';
 import { IngredientsModule } from './ingredients/ingredients.module.js';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 
 @Module({
@@ -11,6 +12,10 @@ import { IngredientsModule } from './ingredients/ingredients.module.js';
     MongooseModule.forRoot('mongodb://localhost/cooking_api'),
     RecipesModule,
     IngredientsModule,
+    ServeStaticModule.forRoot({
+      rootPath: 'uploads',
+      serveRoot: '/uploads',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

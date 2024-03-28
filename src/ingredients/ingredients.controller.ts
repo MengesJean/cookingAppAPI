@@ -2,14 +2,19 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { IngredientsService } from './ingredients.service.js';
 import { CreateIngredientDto } from './dto/create-ingredient.dto.js';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto.js';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadedFile } from '@nestjs/common';
+import { UseInterceptors } from '@nestjs/common';
+import { multerOptions } from '../utils/multerOptions.js';
 
 @Controller('ingredients')
 export class IngredientsController {
   constructor(private readonly ingredientsService: IngredientsService) {}
 
   @Post()
-  async create(@Body() createIngredientDto: CreateIngredientDto) {
-    return this.ingredientsService.create(createIngredientDto);
+  @UseInterceptors(FileInterceptor('file', multerOptions))
+  async create(@UploadedFile() file: Express.Multer.File, @Body() createIngredientDto: CreateIngredientDto) {
+    return this.ingredientsService.create(createIngredientDto, file);
   }
 
   @Get()
@@ -23,8 +28,9 @@ export class IngredientsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateIngredientDto: UpdateIngredientDto) {
-    return this.ingredientsService.update(id, updateIngredientDto);
+  @UseInterceptors(FileInterceptor('file', multerOptions))
+  update(@Param('id') id: string, @UploadedFile() file: Express.Multer.File, @Body() updateIngredientDto: UpdateIngredientDto) {
+    return this.ingredientsService.update(id, updateIngredientDto, file);
   }
 
   @Delete(':id')
