@@ -1,5 +1,12 @@
 import { Type } from 'class-transformer';
-import { IsString, IsNumber, IsNotEmpty, ValidateNested, IsMongoId, IsArray } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsNotEmpty,
+  ValidateNested,
+  IsMongoId,
+  IsArray,
+} from 'class-validator';
 
 class IngredientDto {
   @IsMongoId()
@@ -10,6 +17,14 @@ class IngredientDto {
 
   @IsString()
   readonly unit: string;
+}
+
+class StepsDto {
+  @IsString()
+  readonly title: string;
+
+  @IsString()
+  readonly text: string;
 }
 
 export class CreateRecipeDto {
@@ -34,4 +49,8 @@ export class CreateRecipeDto {
   @ValidateNested({ each: true })
   @Type(() => IngredientDto)
   readonly ingredients: IngredientDto[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  readonly steps: StepsDto[];
 }

@@ -1,2 +1,2 @@
-#TODO
-- Verification si image remplacé dans INGREDIENTS alors supprimer ancienne
+# TODO
+- Ajout étapes de cuisines 

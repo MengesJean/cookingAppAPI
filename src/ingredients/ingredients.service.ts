@@ -67,6 +67,20 @@ export class IngredientsService {
   }
 
   async remove(id: string) {
+    const ingredient = await this.ingredientModel.findById(id);
+    if(ingredient && ingredient.imageUrl) {
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = path.dirname(__filename);
+      const oldImagePath = ingredient.imageUrl.replace(`${process.env.HOST_URL}/uploads/`, '');
+      const fullPath = path.resolve(__dirname, '../../uploads', oldImagePath);
+      fs.unlink(fullPath, (err) => {
+        if (err) {
+          console.error(err);
+          // Gérer l'erreur si nécessaire
+        }
+        console.log(`Ancienne image supprimée : ${fullPath}`);
+      });
+    }
     return this.ingredientModel.findByIdAndDelete(id);
   }
 }
