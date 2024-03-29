@@ -28,6 +28,9 @@ export class Recipes {
   time: number;
 
   @Prop({required: true, type: Number})
+  time_cooking: number;
+
+  @Prop({required: true, type: Number})
   difficulty: number;
 
   @Prop({ type: [IngredientInRecipe], required: true })

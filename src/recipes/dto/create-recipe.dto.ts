@@ -25,6 +25,9 @@ export class CreateRecipeDto {
   readonly time: number;
 
   @IsNumber()
+  readonly time_cooking: number;
+
+  @IsNumber()
   readonly difficulty: number;
 
   @IsArray()

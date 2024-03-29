@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { RecipesModule } from './recipes/recipes.module.js';
 import { IngredientsModule } from './ingredients/ingredients.module.js';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
@@ -15,6 +16,14 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     ServeStaticModule.forRoot({
       rootPath: 'uploads',
       serveRoot: '/uploads',
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true, // Rend le module global
+      envFilePath: [
+        `.env.${process.env.NODE_ENV}`, // Charge en premier le fichier spécifique à l'environnement
+        '.env', // Charge ensuite le fichier global
+      ],
+      // ignoreEnvFile: process.env.NODE_ENV === 'production', // Option pour ignorer les fichiers .env en production si nécessaire
     }),
   ],
   controllers: [AppController],
